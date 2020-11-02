@@ -1,6 +1,6 @@
 import pymysql
 from luigi import *
-
+import sys
 
 class MyDatabase(Task):
     data = ListParameter()
@@ -19,9 +19,14 @@ class MyDatabase(Task):
                 charset='utf8mb4',
             )
             connection.close()
-
+            f = open('result.txt', 'a')
+            f.write(f'database {self.data[0]} connection OK\n ')
+            f.close()
         except:
             result = 1
+            f = open('result.txt', 'a')
+            f.write(f'database {self.data[0]} connection {sys.exc_info()}\n ')
+            f.close()
 
 
         if (result == 1):
