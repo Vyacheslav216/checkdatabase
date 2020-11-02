@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pymysql
 from luigi import *
 import sys
@@ -20,12 +22,12 @@ class MyDatabase(Task):
             )
             connection.close()
             f = open('result.txt', 'a')
-            f.write(f'database {self.data[0]} connection OK\n ')
+            f.write(f'{datetime.now().strftime("%Y:%m:%d %H:%M")} database {self.data[0]} connection OK\n')
             f.close()
         except:
             result = 1
             f = open('result.txt', 'a')
-            f.write(f'database {self.data[0]} connection {sys.exc_info()}\n ')
+            f.write(f'{datetime.now().strftime("%Y:%m:%d %H:%M")} database {self.data[0]} connection {sys.exc_info()}\n')
             f.close()
 
 
